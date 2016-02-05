@@ -17,6 +17,20 @@ $(document).ready(function(){
         $('oa-house').each(function(){
           $(this).on('classChange', houseHandler);
         })
+        // Register picker
+        $('oa-colorPicker').each(function(){
+          $(this).on('colorChange', function(){
+            pickerHandler();
+          })
+        })
+        // Register event on OA-Piano
+        $('oa-piano').each(function(){
+          $(this).on('noteChange', pianoHandler);
+        })
+        // Register event on input tag
+        $('input').each(function(){
+          $(this).on('change', inputHandler);
+        })
         promise.resolve();
       }
       else {
@@ -31,6 +45,27 @@ $(document).ready(function(){
         function setupBoard(){
           if (board.on != undefined){
             board.on('ready', function(){
+              //Button
+              $('wa-button').each(function(){
+                this.on('pressed', buttonHandler);
+              })
+              //Bat
+              $('oa-bat').each(function(){
+                this.on('touched', touchedHandler);
+              })
+              //Tri-Color-LED
+              pickerHandler();
+              //PIR
+              $('wa-pir').each(function(){
+                this.on('detected', detected);
+                this.on('ended', ended);
+              })
+              //Ultrasonic-Sensor
+              $('wa-ultrasonic').each(function(){
+                this.ping(ping, 300);
+              })
+              //DHT
+              dht.read(read, 3000);
               console.log("Board is ready to go");
             });
             clearInterval(schedule);
